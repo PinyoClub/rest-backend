@@ -18,4 +18,4 @@ USER node
 RUN cd / && npm ci --only-production
 ENV PATH=$PATH:/node_modules/.bin
 RUN cd /app && tsc
-CMD node /dist/index.js
+CMD node /dist/server.js

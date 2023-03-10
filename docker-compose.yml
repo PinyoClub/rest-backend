@@ -16,14 +16,17 @@ services:
     volumes:
       - ./:/app
       - vscode-extensions-pc-rest-backend:/root/.vscode-server/extensions
+    secrets:
+      - pc_mongo_user
+      - pc_mongo_pw
   db:
     image: mongo:6.0.4
     restart: always
     container_name: pc-db
     environment:
       MONGO_INITDB_DATABASE: pinyoclub
-      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/pc_mongo_user
-      MONGO_INITDB_ROOT_USERNAME_FILE: /run/secrets/pc_mongo_pw
+      MONGO_INITDB_ROOT_USERNAME_FILE: /run/secrets/pc_mongo_user
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/pc_mongo_pw
     secrets:
       - pc_mongo_user
       - pc_mongo_pw
