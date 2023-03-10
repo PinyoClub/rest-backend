@@ -1,12 +1,13 @@
-import mongoose, { Schema, InferSchemaType } from 'mongoose';
+import { Schema, InferSchemaType, model } from 'mongoose';
 
 const playerSchema = new Schema({
-  nickname: { type: String, required: true },
+  nickname: { type: String, required: true, unique: true },
   email: { type: String, required: false }
 })
 
+
 export type Player = InferSchemaType<typeof playerSchema>;
 
-const PlayerModel = mongoose.model('Player', playerSchema);
+const PlayerModel = model('Player', playerSchema);
 
 export default PlayerModel;
