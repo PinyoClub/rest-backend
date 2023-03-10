@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "15cfae20-cb0b-4828-8449-0bc03018f359",
+    "colId": "5eb593cd-bdf9-4a7b-90d7-078c470e7f14",
+    "containerId": "",
+    "name": "Add player",
+    "url": "{{host}}/player/add",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-03-10T19:50:44.165Z",
+    "modified": "2023-03-10T20:07:05.683Z",
+    "headers": [
+      {
+        "name": "Accept",
+        "value": "*/*",
+        "isDisabled": true
+      },
+      {
+        "name": "User-Agent",
+        "value": "Thunder Client (https://www.thunderclient.com)",
+        "isDisabled": true
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"nickname\": \"Jóska\"\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]
