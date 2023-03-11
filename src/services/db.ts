@@ -1,5 +1,6 @@
 import { secrets } from "docker-secret";
 import { connect } from "mongoose";
+import logger from "./logger";
 
 export default class Db {
   
@@ -12,6 +13,6 @@ export default class Db {
       connectTimeoutMS: 5000,
       serverSelectionTimeoutMS: 5000
     })
-    console.log('Mongo DB connection successful');
+    logger.verbose("Connected to MongoDB");
   }
 }

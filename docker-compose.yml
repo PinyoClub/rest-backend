@@ -11,6 +11,7 @@ services:
     environment:
       - VIRTUAL_HOST=pinyo-club-api.localhost
       - VIRTUAL_PORT=3000
+      - NODE_ENV=development
     ports:
       - 3000:3000
     volumes:

@@ -4,6 +4,7 @@ import swaggerUI from 'swagger-ui-express';
 import helmet from 'helmet';
 import PlayerRouter from './routers/PlayerRouter';
 import MatchRouter from './routers/MatchRouter';
+import logger from './services/logger';
 
 const app: Express = express();
 app.use(helmet());
@@ -21,5 +22,5 @@ app.use('/player', PlayerRouter);
 app.use('/match', MatchRouter);
 
 app.listen(3000, () => {
-  console.log('Backend REST API is running');
+  logger.info('Backend REST API is running');
 });
