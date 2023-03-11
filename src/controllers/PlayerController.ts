@@ -12,7 +12,6 @@ export default class PlayerController {
   @Response("400", "Duplicate error")
   @Response("500", "Internal server error")
   static async addPlayer(@Body() player: Player): Promise<void> {
-    //if(!player.nickname) throw Error('Invalid body, nickname is required');
     await Db.connect();
     const playerModel = new PlayerModel(player);
     await playerModel.save();
