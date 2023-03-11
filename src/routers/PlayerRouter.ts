@@ -20,4 +20,15 @@ PlayerRouter.post('/add', async (req: Request, res: Response, next: NextFunction
   }
 })
 
+PlayerRouter.get('/:identifier', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const player = await PlayerController.getPlayer(req.params.identifier);
+    if(!player) throw new Error('Player not found');
+    res.send(player);
+  } catch (error) {
+    if((error as Error).message === 'Player not found') return res.status(404).json({ error: 'Player not found'});
+    res.status(500).json({error: 'Internal server error'});
+  }
+})
+
 export default PlayerRouter;
