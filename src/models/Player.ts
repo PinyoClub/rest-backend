@@ -1,16 +1,14 @@
-import { Schema, InferSchemaType, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 export interface Player {
   nickname: string,
-  email: string
+  email?: string
 }
+
 const playerSchema = new Schema<Player>({
   nickname: { type: String, required: true, unique: true },
-  email: { type: String, required: false }
+  email: { type: String }
 })
 
-//export type Player = InferSchemaType<typeof playerSchema>;
-
 const PlayerModel = model('Player', playerSchema);
-
 export default PlayerModel;
