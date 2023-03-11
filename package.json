@@ -39,6 +39,7 @@
   "dependencies": {
     "docker-secret": "^2.0.5",
     "express": "^4.18.2",
+    "express-oauth2-jwt-bearer": "^1.3.0",
     "helmet": "^6.0.1",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.1",

@@ -11,7 +11,7 @@ services:
     environment:
       - VIRTUAL_HOST=pinyo-club-api.localhost
       - VIRTUAL_PORT=3000
-      - NODE_ENV=development
+      - NODE_ENV=changemetodevelopment
     ports:
       - 3000:3000
     volumes:
@@ -20,6 +20,9 @@ services:
     secrets:
       - pc_mongo_user
       - pc_mongo_pw
+    networks:
+      - proxy
+      - pinyo
   db:
     image: mongo:6.0.4
     restart: always
@@ -33,9 +36,13 @@ services:
     secrets:
       - pc_mongo_user
       - pc_mongo_pw
+    networks:
+      - pinyo
 volumes:
   vscode-extensions-pc-rest-backend:
 networks:
+  pinyo:
+    name: pinyo_net
   proxy:
     external: true
     name: proxy_net

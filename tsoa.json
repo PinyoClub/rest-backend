@@ -3,6 +3,17 @@
   "noImplicitAdditionalProperties": "throw-on-extras",
   "spec": {
     "outputDirectory": "src/public",
-    "specVersion": 3
+    "specVersion": 3,
+    "securityDefinitions": {
+      "jwt": {
+        "type": "oauth2",
+        "tokenUrl": "https://pinyo.eu.auth0.com/oauth/token",
+        "flow": "application",
+        "scopes": {
+            "admin": "admin",
+            "player": "player"
+        }
+      }
+    }
   }
 }

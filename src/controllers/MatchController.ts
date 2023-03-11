@@ -1,6 +1,6 @@
 import Db from "../services/db";
 import MatchModel, { Match } from "../models/Match";
-import { Post, Route, SuccessResponse, Tags, Response, Body } from "tsoa";
+import { Post, Route, SuccessResponse, Tags, Response, Body, Security } from "tsoa";
 import { ObjectId } from "mongodb";
 
 @Route('/match')
@@ -9,6 +9,7 @@ export default class MatchController {
 
   @Post('/create')
   @SuccessResponse('201', 'Match created')
+  @Security('jwt')
   @Response('400', "StartTime & Players are required")
   @Response('500', "Internal server error")
   static async create(@Body() match: Match): Promise<{ id: string, message: 'Match created'}> {
@@ -21,6 +22,7 @@ export default class MatchController {
 
   @Post('/close')
   @SuccessResponse('200', 'Match has been closed')
+  @Security('jwt')
   @Response('400', 'All fields are required')
   @Response('400', 'Match not found or it has been closed already')
   @Response('500', 'Internal server error')
