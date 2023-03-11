@@ -7,6 +7,26 @@ import { Types } from 'mongoose';
 @Tags('Player')
 export default class PlayerController {
 
+  @Get('/')
+  @SuccessResponse("200", "Player list (only nicknames)")
+  @Response("500", "Internal server error")
+  static async getAllPlayers(): Promise<Player[] | null> {
+    await Db.connect();
+    return await PlayerModel.find({});
+  }
+
+  @Get('/:identifier')  
+  @SuccessResponse("200", "Player details")
+  @Response("404", "Player not found")
+  @Response("500", "Internal server error")
+  static async getPlayer(identifier: string): Promise<Player | null> {
+    await Db.connect();
+    let condition = {};
+    if(Types.ObjectId.isValid(identifier)) condition = { _id: identifier };
+    else condition = { nickname: identifier };
+    return await PlayerModel.findOne(condition);
+  }
+
   @Post('/add')
   @SuccessResponse("201", "Player created")
   @Response("400", "'nickname' is a mandatory field")
@@ -17,16 +37,5 @@ export default class PlayerController {
     const playerModel = new PlayerModel(player);
     await playerModel.save();
   }
-
-  @Get('/:identifier')  
-  @SuccessResponse("200", "Player details")
-  @Response("404", "Player not found")
-  @Response("500", "Internal sever error")
-  static async getPlayer(identifier: string): Promise<Player | null> {
-    await Db.connect();
-    let condition = {};
-    if(Types.ObjectId.isValid(identifier)) condition = { _id: identifier };
-    else condition = { nickname: identifier };
-    return await PlayerModel.findOne(condition);
-  }
+  
 }
