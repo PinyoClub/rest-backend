@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import swaggerUI from 'swagger-ui-express';
 import helmet from 'helmet';
 import PlayerRouter from './routers/PlayerRouter';
+import MatchRouter from './routers/MatchRouter';
 
 const app: Express = express();
 app.use(helmet());
@@ -17,6 +18,7 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(undefined, {
 }))
 
 app.use('/player', PlayerRouter);
+app.use('/match', MatchRouter);
 
 app.listen(3000, () => {
   console.log('Backend REST API is running');
