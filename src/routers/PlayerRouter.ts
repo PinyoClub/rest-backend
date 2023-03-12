@@ -38,10 +38,10 @@ PlayerRouter.post('/add', async (req: Request, res: Response, next: NextFunction
     await PlayerController.addPlayer(req.body);
     res.status(201).json({message: req.body.nickname + ' - player created'});
   } catch (error) {
-    logger.error(error);
     if(error instanceof Error.ValidationError) return res.status(400).json({error: error.message});
     else if((error as MongoError).code == 11000) return res.status(400).json({error: `Duplicate player: '${req.body.nickname}'`});
     else if(error instanceof Error.MongooseServerSelectionError) return res.status(500).json({error: 'Database error'});
+    logger.error(error);
     res.status(500).json({error: 'Internal server error'});
   }
 })

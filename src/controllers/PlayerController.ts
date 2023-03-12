@@ -12,7 +12,7 @@ export default class PlayerController {
   @Security('jwt')
   @Response("500", "Internal server error")
   static async getAllPlayers(): Promise<Player[] | null> {
-    await Db.connect();
+    //await Db.connect();
     return await PlayerModel.find({});
   }
 
@@ -22,7 +22,6 @@ export default class PlayerController {
   @Response("404", "Player not found")
   @Response("500", "Internal server error")
   static async getPlayer(identifier: string): Promise<Player | null> {
-    await Db.connect();
     let condition = {};
     if(Types.ObjectId.isValid(identifier)) condition = { _id: identifier };
     else condition = { nickname: identifier };
@@ -36,7 +35,6 @@ export default class PlayerController {
   @Response("400", "Duplicate error")
   @Response("500", "Internal server error")
   static async addPlayer(@Body() player: Player): Promise<void> {
-    await Db.connect();
     const playerModel = new PlayerModel(player);
     await playerModel.save();
   }

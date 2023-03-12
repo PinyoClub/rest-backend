@@ -10,7 +10,6 @@ export default class Db {
       authSource: 'admin',
       user: secrets.pc_mongo_user,
       pass: secrets.pc_mongo_pw,
-      connectTimeoutMS: 5000,
       serverSelectionTimeoutMS: 5000
     })
     logger.verbose("Connected to MongoDB");

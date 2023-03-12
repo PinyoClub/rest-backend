@@ -13,7 +13,7 @@ export default class MatchController {
   @Response('400', "StartTime & Players are required")
   @Response('500', "Internal server error")
   static async create(@Body() match: Match): Promise<{ id: string, message: 'Match created'}> {
-    await Db.connect();
+    //await Db.connect();
     match.IsInProgress = true;
     const matchModelInstance = new MatchModel(match);
     const { id } = await matchModelInstance.save();
@@ -27,7 +27,7 @@ export default class MatchController {
   @Response('400', 'Match not found or it has been closed already')
   @Response('500', 'Internal server error')
   static async close(@Body() match: Match): Promise<{ id: string, message: 'Match has been closed'}> {
-    await Db.connect();
+    //await Db.connect();
     match.IsInProgress = false;
     const { ServeStart, EndTime, Steps, IsInProgress } = match;
     const mongoResponse = await MatchModel.findOneAndUpdate({_id: match.ID, IsInProgress: true } , { ServeStart, EndTime, Steps, IsInProgress }, { returnDocument: 'after' });
