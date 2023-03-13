@@ -1,24 +1,36 @@
-import { Schema, model, Types } from 'mongoose';
+import { ObjectId } from 'mongodb';
+import { Schema, model } from 'mongoose';
 
-export interface Match {
-  ID?: string,
+export interface startMatch {
   StartTime: Date,
-  EndTime?: Date,
-  Players: Array<string>,
-  ServeStart?: number,
-  Steps?: Array<Array<number>>,
-  IsInProgress: Boolean
+  Players: String[]
 }
 
-const matchSchema = new Schema<Match>({
+export interface endMatch {
+  ID: string,
+  EndTime: Date, 
+  ServeStart: number,
+  Steps: Array<Array<number>>
+}
+
+export type Match = startMatch & endMatch;
+
+const startMatchSchemaObject = {
   StartTime: { type: Date, required: true },
-  EndTime: { type: Date, required: false },
-  Players: [{ type: String }],
-  ServeStart: { type: Number },
+  Players: { type: [ObjectId], required: true, ref: 'Player' , default: undefined }
+};
+
+const endMatchSchemaObject = {
+  ID: { type: String, required: true },
+  ServeStart: { type: Number, required: true },
   Steps: [{ type: Array, required: true }],
-  IsInProgress: { type: Boolean, required: true }
-})
+  EndTime: { type: Date, required: true }
+};
 
-const MatchModel = model('Match', matchSchema);
+export const startMatchSchema = new Schema<startMatch>(startMatchSchemaObject);
+export const endMatchSchema = new Schema<endMatch>(endMatchSchemaObject);
+export const matchSchema = new Schema<endMatch & startMatch>({ ...startMatchSchemaObject, ...endMatchSchemaObject });
 
-export default MatchModel;
+export const StartMatchModel = model('StartMatch', startMatchSchema, 'matches');
+export const EndMatchModel = model('EndMatch', endMatchSchema, 'matches');
+export const MatchModel = model('Match', matchSchema, 'matches');

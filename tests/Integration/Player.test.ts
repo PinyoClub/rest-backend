@@ -3,7 +3,7 @@ import app from "../../src/app"
 import PlayerModel from "../../src/models/Player"
 import Db from "../../src/services/db"
 
-describe('/playerß', () => {
+describe('/player', () => {
   
   describe('POST /create', () => {
 
@@ -98,6 +98,11 @@ describe('/playerß', () => {
       expect(response.body).toHaveProperty('error');
     })
 
+  }) 
+
+  
+  afterAll(async () => {
+    await Db.disconnect();
   })
 
 })
