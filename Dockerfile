@@ -9,6 +9,7 @@ FROM base as development
 RUN apk add git openssh-client
 RUN cd / && npm install
 ENV PATH=$PATH:/node_modules/.bin
+CMD [ "npm", "start"]
 
 FROM base as production
 COPY ./src /app

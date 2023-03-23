@@ -2,13 +2,13 @@ import express, { NextFunction, Request, Response, Router } from "express";
 import { Error, MongooseError } from 'mongoose';
 import MatchController from "../controllers/MatchController";
 import logger from "../services/logger";
-import { startMatch } from "../models/Match";
+import requiredPermissions from "../middlewares/PermissionHandler";
 
 const MatchRouter = Router();
 
 MatchRouter.use(express.json());
 
-MatchRouter.post('/create', async (req: Request, res: Response, next: NextFunction) => {
+MatchRouter.post('/create', requiredPermissions(['host']), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const createdMatch: { id: string, message: string } = await MatchController.create(req.body);
     res.status(201).json(createdMatch);
@@ -23,14 +23,14 @@ MatchRouter.post('/create', async (req: Request, res: Response, next: NextFuncti
       }
       return res.status(400).json({errors: errorList});
     }
-    /* if((error as Error).message == 'Required fields are: Players, StartTime') return res.status(400).json({error: (error as Error).message});
+    if((error as Error).message == 'Required fields are: Players, StartTime') return res.status(400).json({error: (error as Error).message});
     else if(error instanceof Error.MongooseServerSelectionError) return res.status(500).json({error: 'Database error'});
-    logger.error(error); */
+    logger.error(error);
     res.status(500).json({error: 'Internal server error'});
   }
 })
 
-MatchRouter.post('/close', async (req: Request, res: Response, next: NextFunction) => {
+MatchRouter.post('/close', requiredPermissions(['host']), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const createdMatch: Object = await MatchController.close(req.body);
     res.status(200).json(createdMatch);
